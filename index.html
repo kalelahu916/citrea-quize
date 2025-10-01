@@ -1,208 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Citrea Knowledge Quiz</title>
- <style>
- body {
- font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- background: linear-gradient(135deg, #7dd3fc, #1e3a8a);
- display: flex;
- justify-content: center;
- align-items: center;
- min-height: 100vh;
- margin: 0;
- }
- .quiz-container {
- background: white;
- padding: 30px;
- border-radius: 12px;
- box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
- max-width: 700px;
- width: 90%;
- text-align: center;
- }
- h1 {
- color: #1e40af;
- font-size: 2.2em;
- margin-bottom: 20px;
- }
- .question {
- font-size: 1.5em;
- color: #111827;
- margin: 20px 0;
- }
- .option {
- background: #60a5fa;
- color: white;
- padding: 15px;
- margin: 10px 0;
- border-radius: 8px;
- cursor: pointer;
- transition: background 0.3s ease;
- }
- .option:hover {
- background: #3b82f6;
- }
- .option.selected {
- background: #dc2626;
- }
- button {
- background: #16a34a;
- color: white;
- border: none;
- padding: 15px 30px;
- border-radius: 8px;
- cursor: pointer;
- font-size: 1.1em;
- margin: 15px;
- }
- button:hover {
- background: #15803d;
- }
- #result {
- display: none;
- margin-top: 20px;
- font-size: 1.5em;
- color: #1e40af;
- }
- .restart {
- background: #f59e0b;
- }
- .restart:hover {
- background: #d97706;
- }
- </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citrea Quiz Challenge</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #7dd3fc, #1e3a8a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+        }
+        h1 {
+            color: #1e40af;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.5em;
+            color: #111827;
+            margin: 20px 0;
+        }
+        .option {
+            background: #60a5fa;
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .option:hover {
+            background: #3b82f6;
+        }
+        .option.selected {
+            background: #dc2626;
+        }
+        button {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 15px;
+        }
+        button:hover {
+            background: #15803d;
+        }
+        #start-btn {
+            display: block;
+        }
+        #next-btn, #result {
+            display: none;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #1e40af;
+        }
+        .restart {
+            background: #f59e0b;
+        }
+        .restart:hover {
+            background: #d97706;
+        }
+    </style>
 </head>
 <body>
- <div class="quiz-container">
- <h1>Citrea Quiz: Master Bitcoin's L2!</h1>
- <div class="question" id="question"></div>
- <div id="options"></div>
- <button onclick="nextQuestion()">Next</button>
- <div id="result"></div>
- </div>
+    <div class="quiz-container">
+        <h1>Citrea Quiz: Master Bitcoin's L2!</h1>
+        <div class="question" id="question"></div>
+        <div id="options"></div>
+        <button id="start-btn" onclick="startQuiz()">Start Quiz</button>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+        <div id="result"></div>
+    </div>
 
- <script>
- const quizData = [
- {
- question: "What type of Layer 2 solution is Citrea?",
- options: ["Sidechain", "State Channel", "Zero-Knowledge Rollup", "Plasma"],
- correct: 2
- },
- {
- question: "What does Citrea primarily aim to enable on Bitcoin?",
- options: ["Faster mining", "Smart contracts and DeFi", "Anonymity features", "New coin creation"],
- correct: 1
- },
- {
- question: "Which virtual machine is Citrea compatible with?",
- options: ["Solana VM", "Ethereum Virtual Machine (EVM)", "Cardano VM", "Polkadot VM"],
- correct: 1
- },
- {
- question: "What is the name of Citrea's bridge for BTC in DeFi?",
- options: ["Clementine Bridge", "Bitcoin Bridge", "ZkBridge", "LayerZero"],
- correct: 0
- },
- {
- question: "What technology powers Citrea's scalability?",
- options: ["Proof of Stake", "Zero-Knowledge Proofs", "Delegated Proof of Work", "Sharding"],
- correct: 1
- },
- {
- question: "Which cryptocurrency is used as Citrea's gas token?",
- options: ["ETH", "BTC", "USDC", "DAI"],
- correct: 1
- },
- {
- question: "When did Citrea's testnet launch?",
- options: ["January 2024", "September 2024", "March 2025", "December 2023"],
- correct: 1
- },
- {
- question: "What role does Bitcoin play in Citrea's architecture?",
- options: ["Execution layer", "Data storage only", "Settlement and Data Availability", "Mining only"],
- correct: 2
- },
- {
- question: "What is BitVM's role in Citrea?",
- options: ["Enables complex smart contracts", "Provides mining rewards", "Manages gas fees", "Stores user data"],
- correct: 0
- },
- {
- question: "What program did Citrea launch to support developers?",
- options: ["Citrea Boost", "Citrea Origins", "Bitcoin Builder", "ZkDevelop"],
- correct: 1
- }
- ];
+    <script>
+        const quizData = [
+            {
+                question: "What type of Layer 2 solution is Citrea?",
+                options: ["Sidechain", "State Channel", "Zero-Knowledge Rollup", "Plasma"],
+                correct: 2
+            },
+            {
+                question: "What does Citrea primarily aim to enable on Bitcoin?",
+                options: ["Faster mining", "Smart contracts and DeFi", "Anonymity features", "New coin creation"],
+                correct: 1
+            },
+            {
+                question: "Which virtual machine is Citrea compatible with?",
+                options: ["Solana VM", "Ethereum Virtual Machine (EVM)", "Cardano VM", "Polkadot VM"],
+                correct: 1
+            },
+            {
+                question: "What is the name of Citrea's bridge for BTC in DeFi?",
+                options: ["Clementine Bridge", "Bitcoin Bridge", "ZkBridge", "LayerZero"],
+                correct: 0
+            },
+            {
+                question: "What technology powers Citrea's scalability?",
+                options: ["Proof of Stake", "Zero-Knowledge Proofs", "Delegated Proof of Work", "Sharding"],
+                correct: 1
+            },
+            {
+                question: "Which cryptocurrency is used as Citrea's gas token?",
+                options: ["ETH", "BTC", "USDC", "DAI"],
+                correct: 1
+            },
+            {
+                question: "When did Citrea's testnet launch?",
+                options: ["January 2024", "September 2024", "March 2025", "December 2023"],
+                correct: 1
+            },
+            {
+                question: "What role does Bitcoin play in Citrea's architecture?",
+                options: ["Execution layer", "Data storage only", "Settlement and Data Availability", "Mining only"],
+                correct: 2
+            },
+            {
+                question: "What is BitVM's role in Citrea?",
+                options: ["Enables complex smart contracts", "Provides mining rewards", "Manages gas fees", "Stores user data"],
+                correct: 0
+            },
+            {
+                question: "What program did Citrea launch to support developers?",
+                options: ["Citrea Boost", "Citrea Origins", "Bitcoin Builder", "ZkDevelop"],
+                correct: 1
+            }
+        ];
 
- let currentQuestion = 0;
- let score = 0;
+        let currentQuestion = 0;
+        let score = 0;
 
- function loadQuestion() {
- const q = quizData[currentQuestion];
- document.getElementById("question").innerText = q.question;
- const options = document.getElementById("options");
- options.innerHTML = "";
- q.options.forEach((option, index) => {
- const div = document.createElement("div");
- div.className = "option";
- div.innerText = option;
- div.onclick = () => selectOption(index);
- options.appendChild(div);
- });
- document.querySelector("button").innerText = currentQuestion === quizData.length - 1 ? "Finish" : "Next";
- }
+        function startQuiz() {
+            document.getElementById("start-btn").style.display = "none";
+            document.getElementById("next-btn").style.display = "block";
+            document.getElementById("question").style.display = "block";
+            document.getElementById("options").style.display = "block";
+            loadQuestion();
+        }
 
- function selectOption(index) {
- const options = document.getElementsByClassName("option");
- for (let i = 0; i < options.length; i++) {
- options[i].classList.remove("selected");
- }
- options[index].classList.add("selected");
- }
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            const options = document.getElementById("options");
+            options.innerHTML = "";
+            q.options.forEach((option, index) => {
+                const div = document.createElement("div");
+                div.className = "option";
+                div.innerText = option;
+                div.onclick = () => selectOption(index);
+                options.appendChild(div);
+            });
+            document.getElementById("next-btn").innerText = currentQuestion === quizData.length - 1 ? "Finish" : "Next";
+        }
 
-function nextQuestion() {
- const selected = document.querySelector(".option.selected");
- if (!selected) {
- alert("Please select an option!");
- return;
- }
- const answer = Array.from(document.getElementsByClassName("option")).indexOf(selected);
- if (answer === quizData[currentQuestion].correct) {
- score++;
- }
- currentQuestion++;
- if (currentQuestion < quizData.length) {
- loadQuestion();
- } else {
- showResult();
- }
- }
+        function selectOption(index) {
+            const options = document.getElementsByClassName("option");
+            for (let i = 0; i < options.length; i++) {
+                options[i].classList.remove("selected");
+            }
+            options[index].classList.add("selected");
+        }
 
- function showResult() {
- document.getElementById("question").style.display = "none";
- document.getElementById("options").style.display = "none";
- document.querySelector("button").style.display = "none";
- const result = document.getElementById("result");
- result.style.display = "block";
- result.innerHTML = <p>Your Score: ${score} / ${quizData.length}! 🎉</p><button class="restart" onclick="restartQuiz()">Restart Quiz</button>;
- }
+        function nextQuestion() {
+            const selected = document.querySelector(".option.selected");
+            if (!selected) {
+                alert("Please select an option!");
+                return;
+            }
+            const answer = Array.from(document.getElementsByClassName("option")).indexOf(selected);
+            if (answer === quizData[currentQuestion].correct) {
+                score++;
+            }
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
 
- function restartQuiz() {
- currentQuestion = 0;
- score = 0;
- document .getElementById("question").style.display = "block";
- document.getElementById("options").style.display = "block";
- document.querySelector("button").style.display = "block";
- document.getElementById("result").style.display = "none";
- loadQuestion();
- }
+        function showResult() {
+            document.getElementById("question").style.display = "none";
+            document.getElementById("options").style.display = "none";
+            document.getElementById("next-btn").style.display = "none";
+            const result = document.getElementById("result");
+            result.style.display = "block";
+            result.innerHTML = `<p>Your Score: ${score} / ${quizData.length}! 🎉</p><button class="restart" onclick="restartQuiz()">Restart Quiz</button>`;
+        }
 
- // Start quiz
- loadQuestion();
- </script>
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("question").style.display = "block";
+            document.getElementById("options").style.display = "block";
+            document.getElementById("next-btn").style.display = "block";
+            document.getElementById("result").style.display = "none";
+            loadQuestion();
+        }
+
+        // Initial state: Hide question/options until Start is clicked
+        document.getElementById("question").style.display = "none";
+        document.getElementById("options").style.display = "none";
+    </script>
 </body>
 </html>
