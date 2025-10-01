@@ -46,7 +46,9 @@
             background: #3b82f6;
         }
         .option.selected {
-            background: #dc2626;
+            background: #ffffff; /* White background for selected option */
+            color: #111827; /* Dark text for contrast */
+            border: 2px solid #dc2626; /* Red border to highlight */
         }
         button {
             background: #16a34a;
@@ -69,8 +71,15 @@
         }
         #result {
             margin-top: 20px;
-            font-size: 1.5em;
+            font-size: 1.2em;
             color: #1e40af;
+            text-align: left;
+        }
+        .correct-answer {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e6f3ff;
+            border-radius: 5px;
         }
         .restart {
             background: #f59e0b;
@@ -146,6 +155,7 @@
 
         let currentQuestion = 0;
         let score = 0;
+        let userAnswers = []; // Store user's answers
 
         function startQuiz() {
             document.getElementById("start-btn").style.display = "none";
@@ -176,6 +186,7 @@
                 options[i].classList.remove("selected");
             }
             options[index].classList.add("selected");
+            userAnswers[currentQuestion] = index; // Store user's answer
         }
 
         function nextQuestion() {
@@ -202,12 +213,23 @@
             document.getElementById("next-btn").style.display = "none";
             const result = document.getElementById("result");
             result.style.display = "block";
-            result.innerHTML = `<p>Your Score: ${score} / ${quizData.length}! 🎉</p><button class="restart" onclick="restartQuiz()">Restart Quiz</button>`;
+            let resultHTML = `<p>Your Score: ${score} / ${quizData.length}! 🎉</p>`;
+            resultHTML += `<h3>Correct Answers:</h3>`;
+            quizData.forEach((q, index) => {
+                resultHTML += `<div class="correct-answer">
+                    <strong>Q${index + 1}: ${q.question}</strong><br>
+                    Correct Answer: ${q.options[q.correct]}<br>
+                    Your Answer: ${userAnswers[index] !== undefined ? q.options[userAnswers[index]] : "Not answered"}
+                </div>`;
+            });
+            resultHTML += `<button class="restart" onclick="restartQuiz()">Restart Quiz</button>`;
+            result.innerHTML = resultHTML;
         }
 
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
+            userAnswers = [];
             document.getElementById("question").style.display = "block";
             document.getElementById("options").style.display = "block";
             document.getElementById("next-btn").style.display = "block";
