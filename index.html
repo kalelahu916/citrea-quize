@@ -71,7 +71,7 @@
         }
         #result {
             margin-top: 20px;
-            font-size: 1.2em;
+            font-size: 1.6em; /* Bigger text size for score */
             color: #1e40af;
             text-align: left;
         }
@@ -80,6 +80,7 @@
             padding: 10px;
             background: #e6f3ff;
             border-radius: 5px;
+            font-size: 1.4em; /* Bigger text size for answers */
         }
         .restart {
             background: #f59e0b;
@@ -173,7 +174,8 @@
             document.getElementById("next-btn").style.display = "none";
             const result = document.getElementById("result");
             result.style.display = "block";
-            let resultHTML = `<p>Your Score: ${score} / ${quizData.length}! 🎉</p>`;
+            const emoji = score < 1 ? "😢" : "🎉"; // Sad for 0, happy for 1 or 2
+            let resultHTML = `<p>Your Score: ${score} / ${quizData.length} ${emoji}</p>`;
             resultHTML += `<h3>Correct Answers:</h3>`;
             quizData.forEach((q, index) => {
                 resultHTML += `<div class="correct-answer">
