@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citrea Quiz Challenge</title>
+    <title>Citrea Mini Quiz</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -46,9 +46,9 @@
             background: #3b82f6;
         }
         .option.selected {
-            background: #ffffff; /* White background for selected option */
-            color: #111827; /* Dark text for contrast */
-            border: 2px solid #dc2626; /* Red border to highlight */
+            background: #ffffff;
+            color: #111827;
+            border: 2px solid #dc2626;
         }
         button {
             background: #16a34a;
@@ -91,7 +91,7 @@
 </head>
 <body>
     <div class="quiz-container">
-        <h1>Citrea Quiz: Master Bitcoin's L2!</h1>
+        <h1>Citrea Mini Quiz</h1>
         <div class="question" id="question"></div>
         <div id="options"></div>
         <button id="start-btn" onclick="startQuiz()">Start Quiz</button>
@@ -102,60 +102,20 @@
     <script>
         const quizData = [
             {
-                question: "What type of Layer 2 solution is Citrea?",
-                options: ["Sidechain", "State Channel", "Zero-Knowledge Rollup", "Plasma"],
-                correct: 2
-            },
-            {
-                question: "What does Citrea primarily aim to enable on Bitcoin?",
-                options: ["Faster mining", "Smart contracts and DeFi", "Anonymity features", "New coin creation"],
+                question: "What is Citrea designed to be?",
+                options: ["A new cryptocurrency", "Bitcoin's first ZK Rollup", "A Bitcoin mining tool", "An Ethereum bridge"],
                 correct: 1
             },
             {
-                question: "Which virtual machine is Citrea compatible with?",
-                options: ["Solana VM", "Ethereum Virtual Machine (EVM)", "Cardano VM", "Polkadot VM"],
-                correct: 1
-            },
-            {
-                question: "What is the name of Citrea's bridge for BTC in DeFi?",
-                options: ["Clementine Bridge", "Bitcoin Bridge", "ZkBridge", "LayerZero"],
-                correct: 0
-            },
-            {
-                question: "What technology powers Citrea's scalability?",
-                options: ["Proof of Stake", "Zero-Knowledge Proofs", "Delegated Proof of Work", "Sharding"],
-                correct: 1
-            },
-            {
-                question: "Which cryptocurrency is used as Citrea's gas token?",
-                options: ["ETH", "BTC", "USDC", "DAI"],
-                correct: 1
-            },
-            {
-                question: "When did Citrea's testnet launch?",
-                options: ["January 2024", "September 2024", "March 2025", "December 2023"],
-                correct: 1
-            },
-            {
-                question: "What role does Bitcoin play in Citrea's architecture?",
-                options: ["Execution layer", "Data storage only", "Settlement and Data Availability", "Mining only"],
-                correct: 2
-            },
-            {
-                question: "What is BitVM's role in Citrea?",
-                options: ["Enables complex smart contracts", "Provides mining rewards", "Manages gas fees", "Stores user data"],
-                correct: 0
-            },
-            {
-                question: "What program did Citrea launch to support developers?",
-                options: ["Citrea Boost", "Citrea Origins", "Bitcoin Builder", "ZkDevelop"],
+                question: "What is the name of Citrea's bridge for DeFi?",
+                options: ["Rainbow Bridge", "Clementine Bridge", "ZkBridge", "Wormhole"],
                 correct: 1
             }
         ];
 
         let currentQuestion = 0;
         let score = 0;
-        let userAnswers = []; // Store user's answers
+        let userAnswers = [];
 
         function startQuiz() {
             document.getElementById("start-btn").style.display = "none";
@@ -186,7 +146,7 @@
                 options[i].classList.remove("selected");
             }
             options[index].classList.add("selected");
-            userAnswers[currentQuestion] = index; // Store user's answer
+            userAnswers[currentQuestion] = index;
         }
 
         function nextQuestion() {
@@ -237,7 +197,6 @@
             loadQuestion();
         }
 
-        // Initial state: Hide question/options until Start is clicked
         document.getElementById("question").style.display = "none";
         document.getElementById("options").style.display = "none";
     </script>
